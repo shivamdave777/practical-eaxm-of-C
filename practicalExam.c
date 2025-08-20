@@ -2,114 +2,112 @@
 #include <string.h>
 #include <ctype.h>
 
-int main() {
-
-/* ===========================================================
-   Q1. Write a C program that prompts the user to enter a 
-       3-digit positive integer. Find the sum of first 
-       and last digit.
-   =========================================================== */
+// Q1: Sum of first and last digit of a 3-digit number
+void sumFirstLastDigit() {
     int num, first, last, sum;
-    printf("\nQ1: Enter a 3-digit number: ");
+    printf("Enter a 3-digit number: ");
     scanf("%d", &num);
 
-    last = num % 10;       
-    first = num / 100;     
+    last = num % 10;
+    first = num / 100;
     sum = first + last;
 
-    printf("First digit = %d, Last digit = %d\n", first, last);
     printf("Sum of first and last digit = %d\n", sum);
+}
 
-
-/* ===========================================================
-   Q2. Develop a C program that reads a sentence from the user. 
-       Create a function to count the occurrences of each 
-       consonant in the sentence and display the counts.
-   =========================================================== */
+// Q2: Count consonants in a sentence
+void countConsonants() {
     char str[200];
-    int freq[26] = {0};
-
-    printf("\nQ2: Enter a sentence: ");
-    getchar();  // clear input buffer
+    int count[26] = {0};
+    printf("Enter a sentence: ");
+    getchar(); // to clear input buffer
     fgets(str, sizeof(str), stdin);
 
-    for(int i = 0; str[i] != '\0'; i++) {
+    for (int i = 0; str[i] != '\0'; i++) {
         char ch = tolower(str[i]);
-        if(isalpha(ch) && !(ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u'))
-            freq[ch - 'a']++;
+        if (ch >= 'a' && ch <= 'z') {
+            if (!(ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u')) {
+                count[ch - 'a']++;
+            }
+        }
     }
 
-    printf("\nConsonant counts:\n");
-    for(int i = 0; i < 26; i++) {
-        if(freq[i] > 0)
-            printf("%c : %d\n", i + 'a', freq[i]);
+    printf("Consonant counts:\n");
+    for (int i = 0; i < 26; i++) {
+        if (count[i] > 0)
+            printf("%c = %d\n", i+'a', count[i]);
     }
+}
 
-
-/* ===========================================================
-   Q3. Create a C program to check if a given number is 
-       divisible by 3 and 5 both or not.
-   =========================================================== */
-    int n;
-    printf("\nQ3: Enter a number: ");
-    scanf("%d", &n);
-
-    if(n % 3 == 0 && n % 5 == 0)
-        printf("%d is divisible by both 3 and 5.\n", n);
+// Q3: Divisible by 3 and 5
+int isDivisibleBy3And5(int num) {
+    return (num % 3 == 0 && num % 5 == 0);
+}
+void checkDivisibility() {
+    int num;
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    if (isDivisibleBy3And5(num))
+        printf("%d is divisible by both 3 and 5.\n", num);
     else
-        printf("%d is NOT divisible by both 3 and 5.\n", n);
+        printf("%d is NOT divisible by both 3 and 5.\n", num);
+}
 
-
-/* ===========================================================
-   Q4. Write a C program that uses pointers to find the 
-       sum of two 1D arrays.
-   =========================================================== */
-    int size;
-    printf("\nQ4: Enter size of arrays: ");
-    scanf("%d", &size);
-
-    int a[size], b[size], sumArr[size];
-    int *p1 = a, *p2 = b, *p3 = sumArr;
+// Q4: Sum of 2 arrays using pointers
+void sumArrays() {
+    int n;
+    printf("Enter size of arrays: ");
+    scanf("%d", &n);
+    int a[n], b[n], sum[n];
+    int *p=a, *q=b, *r=sum;
 
     printf("Enter elements of first array:\n");
-    for(int i = 0; i < size; i++)
-        scanf("%d", (p1 + i));
-
+    for (int i=0; i<n; i++) scanf("%d", &a[i]);
+    
     printf("Enter elements of second array:\n");
-    for(int i = 0; i < size; i++)
-        scanf("%d", (p2 + i));
+    for (int i=0; i<n; i++) scanf("%d", &b[i]);
 
-    for(int i = 0; i < size; i++)
-        *(p3 + i) = *(p1 + i) + *(p2 + i);
+    for (int i=0; i<n; i++)
+        *(r+i) = *(p+i) + *(q+i);
 
-    printf("Sum of arrays:\n");
-    for(int i = 0; i < size; i++)
-        printf("%d ", *(p3 + i));
+    printf("Sum array: ");
+    for (int i=0; i<n; i++)
+        printf("%d ", sum[i]);
     printf("\n");
+}
 
-
-/* ===========================================================
-   Q5. Implement a C program to print the following pattern 
-       using nested for loop:
-
-   10 9 8 7 6
-     9 8 7 6
-       8 7 6
-         7 6
-           6
-   =========================================================== */
-    int start = 10, end = 6;
-    printf("\nQ5: Pattern Printing\n");
-
-    for(int i = 0; i <= start - end; i++) {
-        for(int s = 0; s < i; s++)
-            printf("  "); // spaces
-        for(int j = start - i; j >= end; j--)
-            printf("%d ", j);
+// Q5: Pattern printing
+void printPattern() {
+    for (int i = 0; i < 5; i++) {
+        for (int s = 0; s < i; s++) printf("  "); // spaces
+        for (int j = 10 - i; j >= 6; j--) printf("%d ", j);
         printf("\n");
     }
+}
 
-    printf("\n=========== End of Practical Programs ===========\n");
+int main() {
+    int choice;
+    do {
+        printf("\n===== Practical Exam Menu =====\n");
+        printf("1. Sum of first and last digit of 3-digit number\n");
+        printf("2. Count consonants in a sentence\n");
+        printf("3. Check divisibility by 3 and 5\n");
+        printf("4. Sum of two arrays using pointers\n");
+        printf("5. Print number pattern\n");
+        printf("0. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: sumFirstLastDigit(); break;
+            case 2: countConsonants(); break;
+            case 3: checkDivisibility(); break;
+            case 4: sumArrays(); break;
+            case 5: printPattern(); break;
+            case 0: printf("Exiting program.\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while(choice != 0);
 
     return 0;
 }
